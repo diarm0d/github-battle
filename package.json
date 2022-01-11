@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack-dev-server"
+    "build": "webpack serve"
   },
-  "babel":{
+  "babel": {
     "presets": [
       "@babel/preset-env",
       "@babel/preset-react"
