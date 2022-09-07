@@ -1,32 +1,47 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
+
+function LanguagesNav({ selected, onUpdateLanguage }) {
+  const languages = ["All", "JavaScript", "Ruby", "Java", "CSS", "Python"];
+  return (
+    <select
+      onChange={(e) => onUpdateLanguage(e.target.value)}
+      selected={selected}
+    >
+      {languages.map((language) => (
+        <option key={language} value={language}>
+          {language}
+        </option>
+      ))}
+    </select>
+  );
+}
 
 export default class Popular extends Component {
-    constructor(props){
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.state = {
-            selectedLanguage: "All"
-        }
+    this.state = {
+      selectedLanguage: "All",
+    };
 
-        this.updateLanguage = this.updateLanguage.bind(this)
-    }
+    this.updateLanguage = this.updateLanguage.bind(this);
+  }
 
-    updateLanguage(selectedLanguage) {
-        this.setState({
-            selectedLanguage,
-        });
-    }
+  updateLanguage(selectedLanguage) {
+    this.setState({
+      selectedLanguage,
+    });
+  }
   render() {
-      const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python']
+      const { selectedLanguage } = this.state
     return (
-    <main>
-      <select onChange={(e) => this.updateLanguage(e.target.value)} selected={this.state.selectedLanguage}>
-          {languages.map((language)=> (
-            <option key={language} value={language}>{language}</option>
-          ))}      
-      </select>
-      {JSON.stringify(this.state, null, 2)}
-    </main>
-    )
+      <main>
+        <LanguagesNav
+        selected={selectedLanguage}
+        onUpdateLanguage={this.updateLanguage}
+        />
+        {JSON.stringify(this.state, null, 2)}
+      </main>
+    );
   }
 }
