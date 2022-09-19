@@ -1,6 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { close } from "./icons";
+import Results from "./Results";
 
 function Instructions() {
   return (
@@ -88,10 +89,10 @@ function PlayerPreview({ username, onReset, label }) {
 }
 
 PlayerPreview.propTypes = {
-    username: PropTypes.string.isRequired,
-    onReset: PropTypes.func.isRequired,
-    label: PropTypes.string.isRequired
-}
+  username: PropTypes.string.isRequired,
+  onReset: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired,
+};
 
 export default class Battle extends React.Component {
   constructor(props) {
@@ -100,6 +101,7 @@ export default class Battle extends React.Component {
     this.state = {
       playerOne: null,
       playerTwo: null,
+      battle: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -116,15 +118,23 @@ export default class Battle extends React.Component {
     });
   }
   render() {
-    const { playerOne, playerTwo } = this.state;
+    const { playerOne, playerTwo, battle } = this.state;
     const disabled = !playerOne || !playerTwo;
+
+    if (battle === true) {
+        return <Results playerOne={playerOne} playerTwo={playerTwo} />
+    }
 
     return (
       <main className="stack main-stack animate-in">
         <div className="split">
           <h1>Players</h1>
-          <pre>{JSON.stringify(this.state, null, 2)}</pre>
-          <button href="#" className={`btn primary ${disabled ? "disabled" : ""}`}>
+          <button
+            href="#"
+            className={`btn primary ${disabled ? "disabled" : ""}`}
+            onClick={() =>{ this.setState({ battle: true });
+        }}
+          >
             Battle
           </button>
         </div>
@@ -159,4 +169,3 @@ export default class Battle extends React.Component {
     );
   }
 }
- 

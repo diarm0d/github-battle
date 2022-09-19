@@ -12,3 +12,61 @@ export function fetchPopularRepos (language) {
         return data.items;
     });
 }
+
+function getProfile (username) {
+    return fetch(`https://api.github.com/users/${username}`)
+    .then((res) => res.json())
+    .then((profile) => {
+        if (profile.message) {
+            throw new Error(getErrorMsg(repos.message, username))
+        }
+        return profile
+    })
+}
+
+function getRepos (username) {
+    return fetch(`https://api.github.com/users/${username}/repos?per_page=100`)
+    .then((res) => res.json())
+    .then((repos) => {
+        if (repos.message) {
+            throw new Error(getErrorMsg(repos.message, username))
+        }
+        return repos
+    })
+
+    function getErrorMsg (message, username) {
+        if (message === 'Not found') {
+            return `${username} doesn't exist`
+        }
+
+        return message
+    }
+}
+
+function getStarCount (repos) {
+    return repos.reduce((count, {stargazers_count }) => { return count + stargazers_count }, 0)
+}
+
+function caculateScore(followers, repos) {
+    return followers * 3 + getStarCount(repos)
+}
+
+function getUserData (player) {
+    return Promise.all([
+        getProfile(player), getRepos(player)
+    ]).then(([profile, repos]) => ({
+        profile,
+        score: caculateScore(profile.followers, repos)
+    }))
+}
+
+function sortPlayer(players) {
+    return players.sort((a,b) => b.score - a.score);
+}
+
+export function battle (players) {
+    return Promise.all([
+        getUserData(players[0]),
+        getUserData(players[1])]).
+        then(sortPlayer);
+}
