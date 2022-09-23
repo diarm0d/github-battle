@@ -1,7 +1,7 @@
 import * as React from "react";
 import PropTypes from "prop-types";
 import { close } from "./icons";
-import Results from "./Results";
+import { Link } from "react-router-dom";
 
 function Instructions() {
   return (
@@ -78,7 +78,9 @@ function PlayerPreview({ username, onReset, label }) {
             src={`https://github.com/${username}.png?size=200`}
             alt={`Avatar for ${username}`}
           />
-          <a href={`htttps://github.com/${username}`} className="link"></a>
+          <a href={`htttps://github.com/${username}`} className="link">
+            {username}
+          </a>
         </div>
         <button onClick={onReset} className="btn secondary icon">
           {close}
@@ -101,7 +103,6 @@ export default class Battle extends React.Component {
     this.state = {
       playerOne: null,
       playerTwo: null,
-      battle: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -118,25 +119,22 @@ export default class Battle extends React.Component {
     });
   }
   render() {
-    const { playerOne, playerTwo, battle } = this.state;
+    const { playerOne, playerTwo } = this.state;
     const disabled = !playerOne || !playerTwo;
-
-    if (battle === true) {
-        return <Results playerOne={playerOne} playerTwo={playerTwo} />
-    }
 
     return (
       <main className="stack main-stack animate-in">
         <div className="split">
           <h1>Players</h1>
-          <button
-            href="#"
+          <Link
+            to={{
+              pathname: "/results",
+              search: `?playerOne=${playerOne}&playerTwo=${playerTwo}`,
+            }}
             className={`btn primary ${disabled ? "disabled" : ""}`}
-            onClick={() =>{ this.setState({ battle: true });
-        }}
           >
             Battle
-          </button>
+          </Link>
         </div>
         <section className="grid">
           {playerOne === null ? (
