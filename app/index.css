@@ -1,4 +1,4 @@
-root {
+:root {
     --coal: #0f0d0e;
     --charcoal: #231f20;
     --charcoal-10: rgba(35, 31, 32, 0.1);
@@ -450,40 +450,4 @@ root {
     left: 50%;
     transform: translateX(-50%) rotate(45deg);
     bottom: -6px;
-  }
-  
-  .results {
-    display: flex;
-    text-align: center;
-    justify-content: center;
-    align-items: start;
-    gap: 16px;
-  }
-  
-  .results img {
-    position: relative;
-    top: -32px;
-  }
-  
-  .card {
-    padding: 40px;
-    border-radius: 16px;
-    font-size: 14px;
-    background-color: var(--bg-alt);
-  }
-  
-  .card p {
-    margin: 0;
-    opacity: 0.75;
-    position: relative;
-  }
-  
-  .card header {
-    padding-bottom: 16px;
-    margin-bottom: 16px;
-    border-bottom: 1px solid var(--border-color);
-  }
-  
-  .card li > *:not(:first-child) {
-    opacity: 0.75;
   }
