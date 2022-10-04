@@ -11,13 +11,9 @@ const styles = {
 };
 
 class Delayed extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
+  state = {
       show: false,
     };
-  }
 
   componentDidMount() {
     this.timeout = window.setTimeout(() => {
@@ -44,13 +40,9 @@ Delayed.propTypes  = {
 };
 
 export default class Loading extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
+  state = {
       content: props.text,
     };
-  }
 
   componentDidMount() {
     const { speed, text } = this.props;
