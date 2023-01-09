@@ -16,25 +16,21 @@ function Instructions() {
   );
 }
 
-class PlayerInput extends React.Component {
-  state = {
-    username: "",
-  }
+const PlayerInput = () => {
+  const [username, setUsername] = React.useState('');
+
   handleSubmit = (event) => {
     event.preventDefault();
 
-    this.props.onSubmit(this.state.username);
+    onSubmit(username);
   }
-  handleChange = (event) => {
-    this.setState({
-      username: event.target.value,
-    });
-  }
-  render() {
-    return (
-      <form className="card" onSubmit={this.handleSubmit}>
+
+  handleChange = (event) => setUsername(event.target.value)
+
+  return (
+    <form className="card" onSubmit={handleSubmit}>
         <label htmlFor="username" className="player-label">
-          {this.props.label}
+          {label}
         </label>
         <div className="input-row">
           <input
@@ -42,21 +38,21 @@ class PlayerInput extends React.Component {
             id="username"
             placeholder="github username"
             autoComplete="off"
-            value={this.state.username}
-            onChange={this.handleChange}
+            value={username}
+            onChange={handleChange}
           />
           <button
             className="btn link"
             type="submit"
-            disabled={!this.state.username}
+            disabled={!username}
           >
             Submit
           </button>
         </div>
       </form>
-    );
-  }
+  )
 }
+ 
 
 function PlayerPreview({ username, onReset, label }) {
   return (
@@ -89,28 +85,21 @@ PlayerPreview.propTypes = {
   label: PropTypes.string.isRequired,
 };
 
-export default class Battle extends React.Component {
-  state = {
-      playerOne: null,
-      playerTwo: null,
-    };
+export const Battle = () => {
+  const [playerOne, setPlayerOne] = React.useState(null);
+  const [playerTwo, setPlayerTwo] = React.useState(null);
 
-  handleSubmit = (id, player) => {
-    this.setState({
-      [id]: player,
-    });
+  const handleSubmit = (id, player) => {
+    id === 'playerOne' ? setPlayerOne(player) : setPlayerTwo(player)
   }
-  handleReset = (id) => {
-    this.setState({
-      [id]: null,
-    });
-  }
-  render() {
-    const { playerOne, playerTwo } = this.state;
-    const disabled = !playerOne || !playerTwo;
 
-    return (
-      <main className="stack main-stack animate-in">
+  const handleReset = (id) => {
+    id === 'playerOne' ? setPlayerOne(null) : setPlayerTwo(null)
+  }
+
+  const disabled = !playerOne || !playerTwo;
+  return (
+    <main className="stack main-stack animate-in">
         <div className="split">
           <h1>Players</h1>
           <Link
@@ -127,30 +116,30 @@ export default class Battle extends React.Component {
           {playerOne === null ? (
             <PlayerInput
               label="Player One"
-              onSubmit={(player) => this.handleSubmit("playerOne", player)}
+              onSubmit={(player) => handleSubmit("playerOne", player)}
             />
           ) : (
             <PlayerPreview
               label="Player One"
               username={playerOne}
-              onReset={() => this.handleReset("playerOne")}
+              onReset={() => handleReset("playerOne")}
             />
           )}
           {playerTwo === null ? (
             <PlayerInput
               label="Player Two"
-              onSubmit={(player) => this.handleSubmit("playerTwo", player)}
+              onSubmit={(player) => handleSubmit("playerTwo", player)}
             />
           ) : (
             <PlayerPreview
               label="Player Two"
               username={playerTwo}
-              onReset={() => this.handleReset("playerTwo")}
+              onReset={() => handleReset("playerTwo")}
             />
           )}
         </section>
         <Instructions />
       </main>
-    );
-  }
+  )
 }
+

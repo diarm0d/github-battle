@@ -8,7 +8,7 @@ const Results = React.lazy(() => import("./components/Results"));
 const Popular = React.lazy(() => import("./components/Popular"));
 const Battle = React.lazy(() => import("./components/Battle"));
 
-export const App = () => {
+function App () {
   const [theme, setTheme] = useState("light");
 
   toggleTheme = () => {
