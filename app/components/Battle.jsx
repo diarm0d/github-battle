@@ -16,16 +16,16 @@ function Instructions() {
   );
 }
 
-const PlayerInput = () => {
+const PlayerInput = ({label, onSubmit}) => {
   const [username, setUsername] = React.useState('');
 
-  handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     onSubmit(username);
   }
 
-  handleChange = (event) => setUsername(event.target.value)
+  const handleChange = (event) => {setUsername(event.target.value)}
 
   return (
     <form className="card" onSubmit={handleSubmit}>
@@ -85,7 +85,7 @@ PlayerPreview.propTypes = {
   label: PropTypes.string.isRequired,
 };
 
-export const Battle = () => {
+const Battle = () => {
   const [playerOne, setPlayerOne] = React.useState(null);
   const [playerTwo, setPlayerTwo] = React.useState(null);
 
@@ -142,4 +142,6 @@ export const Battle = () => {
       </main>
   )
 }
+
+export default Battle;
 

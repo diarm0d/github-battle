@@ -11,7 +11,7 @@ const Battle = React.lazy(() => import("./components/Battle"));
 function App () {
   const [theme, setTheme] = useState("light");
 
-  toggleTheme = () => {
+  const toggleTheme = () => {
     setTheme((theme) => (theme === "light" ? "dark" : "light"));
   };
 
